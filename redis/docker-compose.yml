@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  # redis服务
+  redis:
+    image: redis:7.2.3
+    volumes:
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf # 配置文件
+    ports:
+      - "6379:6379"
+    restart: unless-stopped # 重启策略，除手动停止外自动重启
