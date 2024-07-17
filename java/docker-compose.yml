@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  java:
+    # 指定jdk版本
+    build: ./jdk17
+    volumes:
+      - ./app:/app
+    restart: unless-stopped
