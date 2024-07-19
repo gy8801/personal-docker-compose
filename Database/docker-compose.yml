@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  # redis服务
+  redis:
+    image: redis:7.2.3
+    volumes:
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf # 配置文件
+    ports:
+      - "6379:6379"
+    restart: unless-stopped # 重启策略，除手动停止外自动重启
+
+  # mysql服务
+  mysql:
+    image: mysql:8.0.35
+    # 文件读取环境变量
+    env_file:
+      - ./.env
+    # 直接设置环境变量
+    environment:
+      - TZ=Asia/Shanghai
+    # 挂载数据卷
+    volumes:
+      - ./mysql/data:/var/lib/mysql # 数据
+      - ./mysql/cnf:/etc/mysql/conf.d # 配置文件
+      - ./mysql/sql:/sql # sql文件目录
+    ports:
+      - "3306:3306"
+    restart: unless-stopped # 重启策略，除手动停止外自动重启
