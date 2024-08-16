@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  server:
+    image: jokerwho/palworld-server-tool:latest
+    environment:
+      - WEB__PASSWORD="your web password" # 设置网页管理密码
+      - RCON__ADDRESS="172.17.0.1:25575"
+      - RCON__PASSWORD="your admin password" # 服务器管理员密码
+      - REST__ADDRESS="http://127.0.0.1:8212"
+      - REST__PASSWORD="your admin password" # 服务器管理员密码
+      - SAVE__PATH="/game"
+      - SAVE__SYNC_INTERVAL=120
+    volumes:
+      - /path/to/your/Pal/Saved:/game
+      - ./backups:/app/backups
+      - ./pst.db:/app/pst.db # 持久化
+    ports:
+      - 8080:8080
+    restart: unless-stopped
